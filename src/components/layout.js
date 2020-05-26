@@ -1,16 +1,14 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
+import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+
+const LayoutStyles = styled.div`
+`
+
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -23,24 +21,23 @@ const Layout = ({ children }) => {
     }
   `)
 
+  
+  const [showHeader,setShowHeader] = useState(false)
+  const handleScroll = (e) => {
+    if(e.target.scrollTop > 50){
+      setShowHeader(true)
+    } else {
+      setShowHeader(false)
+    }
+  }
+
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
+    <LayoutStyles>
+      <Header showHeader={showHeader} siteTitle={data.site.siteMetadata.title} />
+        <main onScroll={handleScroll}>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
-      </div>
-    </>
+    </LayoutStyles>
   )
 }
 
