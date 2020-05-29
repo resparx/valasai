@@ -1,7 +1,7 @@
 import React, {useState, useRef} from "react"
 import styled from "styled-components"
 import { Transition } from 'react-transition-group';
-import { animateScroll as scroll } from 'react-scroll';
+import Scroll, { animateScroll  } from 'react-scroll';
 import Layout from "../components/layout"
 
 // import Image from "../components/image"
@@ -37,7 +37,20 @@ button {
 
 }
 `
-const SndFold = styled.section`
+
+const SndFold = styled.div`
+height: 100%;
+background: #000000;
+`;
+
+const LeftPart = styled.div`
+
+`
+const RightPart = styled.div`
+
+`
+
+const ThdFold = styled.section`
 height: 100%;
 p{
   text-align: center;
@@ -93,15 +106,15 @@ const IndexPage = () => {
     setMainTextIn(true)
    }
 
-  //  if(scrollTopOffset > 10 && scrollSecFold) {
+   if(scrollTopOffset > 10 && scrollTopOffset < 900 && scrollSecFold) {
     setScrollSecFold(false)
-    scroll.scrollTo(secondFoldRef.current.offsetTop);
+    animateScroll.scrollTo(secondFoldRef.current.offsetTop);
     console.log( secondFoldRef.current.offsetTop,"window")
   //  } 
   //  else if(scrollTopOffset < 10 && !scrollSecFold) {
   //   scroll.scrollTo(100);
   //   console.log( secondFoldRef.current.offsetTop,"window else if")
-  //  }
+   }
   }
 
   
@@ -132,7 +145,11 @@ const HomeComponent = () => <Transition in={mainTextIn} timeout={500}>
       <FstFold scale={scale}>
        <HomeComponent/>
       </FstFold>
-      <SndFold ref={secondFoldRef}>
+      <SndFold>
+
+      </SndFold>
+
+      <ThdFold ref={secondFoldRef}>
         <p>WHO WE ARE...</p>
         <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
         <CardContainer>
@@ -149,7 +166,7 @@ const HomeComponent = () => <Transition in={mainTextIn} timeout={500}>
             
           </Card>
         </CardContainer>
-      </SndFold>
+      </ThdFold>
       </HomePage>
   </Layout>
 )}
