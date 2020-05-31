@@ -14,6 +14,7 @@ justify-content: space-between;
 align-items: center;
 opacity: ${({showHeader})=> showHeader ? 1 : 0 };
 transition: all .5s ease-out;
+z-index: 2;
 `
 
 const Logo = styled.div`

@@ -1,7 +1,7 @@
-import React, {useState, useRef} from "react"
-import styled from "styled-components"
-import { Transition } from 'react-transition-group';
-import Scroll, { animateScroll  } from 'react-scroll';
+import React, {useState, useEffect , useRef} from "react"
+import styled, { css } from "styled-components"
+import { Transition, CSSTransition } from 'react-transition-group';
+import { animateScroll, scroller  } from 'react-scroll';
 import Layout from "../components/layout"
 
 // import Image from "../components/image"
@@ -13,7 +13,7 @@ overflow-x: scroll;
 background-image: url('https://i.imgur.com/JuotK0A.jpg');
 background-size: cover;
 background-position: center;
-/* transition: all 100ms ease-out;  */
+transition: all 100ms ease-out; 
 
 `
 const FstFold = styled.section`
@@ -38,17 +38,43 @@ button {
 }
 `
 
-const SndFold = styled.div`
+const SndFold = styled.section`
 height: 100%;
 background: #000000;
-`;
+position: relative;
 
-const LeftPart = styled.div`
+& > div {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({secFoldAssest})=> secFoldAssest ? `url(${secFoldAssest.img})` : `transparent`};
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  transition: all 1500ms cubic-bezier(0.09, 0.34, 0, 1.54);
+  clip-path: inset(0 0 0 0);
 
+  & > span {
+  font-size: 80px;
+  text-align: center;
+  color: #ffffff;
+  line-height: 1;
+  ::after {
+    content: '';
+    background: #FFFFFF;
+    display: block;
+    width: 570px;
+    height:6px;
+    left: 110px;
+    position: relative;
+  }
+}
+}
 `
-const RightPart = styled.div`
 
-`
 
 const ThdFold = styled.section`
 height: 100%;
@@ -89,68 +115,114 @@ const Card = styled.div`
 
 
 const IndexPage = () => {
-  const [scale,setScale] = useState(1)
-  const [mainTextIn,setMainTextIn] = useState(true)
-  const [scrollSecFold,setScrollSecFold] = useState(true)
+  const [mainTextIn,setMainTextIn] = useState(true);
 
   const secondFoldRef = useRef();
 
+  useEffect(()=>{
+  },[])
+
+  const secFoldContent = [
+    {
+      img: "https://i.imgur.com/H9utx9q.jpg",
+      content: "Sunt elit nulla nisi minim adipisicing veniam laborum consequat enim minim aute duis"
+    },
+    {
+      img: "https://i.imgur.com/GTWw2Xa.jpg",
+      content: "In in cupidatat deserunt culpa ut magna non incididunt culpa qui magna nostrud enim Lorem."
+    },
+    {
+      img: "https://i.imgur.com/yJxdM22.jpg",
+      content: "Eu voluptate nostrud nostrud consequat labore irure fugiat dolore dolore veniam tempor."
+    },
+    {
+      img: "https://i.imgur.com/uPHqKwv.jpg",
+      content: "Proident duis qui culpa voluptate quis laborum ea est nulla velit commodo id duis."
+    },
+    {
+      img: "https://i.imgur.com/PHAQnG2.jpg",
+      content: "Mollit eiusmod incididunt cillum amet minim non consectetur sit."
+    },
+    {
+      img: "https://i.imgur.com/a7YIqVI.jpg",
+      content: "Fugiat duis ex est nisi reprehenderit commodo laboris aliqua qui sit enim."
+    }
+  ];
+
+
   const handleScroll = (e) => {
     const scrollTopOffset = e.target.scrollTop
-    console.log(scrollTopOffset,"scrollTopOffset")
+
+    // console.log( secondFoldRef.current.getBoundingClientRect(),"getBoundingClientRect")
+    console.log( scrollTopOffset,"scrollTopOffset")
+    // console.log(scrollTopOffset,"scrollTopOffset")
    if (scrollTopOffset > 150 && mainTextIn){
-  //   setScale(2)
     setMainTextIn(false)
    }
    else if( scrollTopOffset === 0){
     setMainTextIn(true)
    }
 
-   if(scrollTopOffset > 10 && scrollTopOffset < 900 && scrollSecFold) {
-    setScrollSecFold(false)
-    animateScroll.scrollTo(secondFoldRef.current.offsetTop);
-    console.log( secondFoldRef.current.offsetTop,"window")
+  //  if(scrollTopOffset > 700 && scrollSecFold) {
+    // scrollTo();
+    // console.log( secondFoldRef.current.getBoundingClientRect(),"window")
+    // setScrollSecFold(false)
   //  } 
   //  else if(scrollTopOffset < 10 && !scrollSecFold) {
-  //   scroll.scrollTo(100);
-  //   console.log( secondFoldRef.current.offsetTop,"window else if")
-   }
+    // animateScroll.scrollTo(100);
+    // console.log( secondFoldRef.current.offsetTop,"window else if")
+  //  }
   }
+  
 
   
 
 
-const HomeComponent = () => <Transition in={mainTextIn} timeout={500}>
+const HomeComponent = () => <Transition timeout={{
+  appear: 100,   
+  enter: 300,
+  exit: 300
+}}
+appear 
+in={mainTextIn}>
 {state => {
-  console.log(state,mainTextIn,"mainTextIn  statetransition: 'all 100ms ease-out',")
+  console.log(state,"statestatestatestate")
+const defaultStyle = {
+  transition: `all .5s ease`
+};
+
   const transitionStyles = {
-    entering: { opacity: 1}, 
+    entering: { opacity: .4}, 
     entered: { opacity: 1},
-    exiting:  { opacity: 0},
-    exited: { opacity: 0}
+    exiting:  { opacity: .6},
+    exited: { opacity: 0 }
   };
   
   return(
-  <div style={{...transitionStyles[state]}}>
-  <h1>Valasai.</h1>
+  <div style={{...defaultStyle,...transitionStyles[state]}}>
+  <h1 >Valasai.</h1>
   <span>Lorem Ipsum is simply dummy text since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</span>
   </div>
 )}}
 </Transition>
-
   return (
   <Layout>
     <SEO title="Home" />
     <HomePage onScroll={handleScroll}>
-      <FstFold scale={scale}>
+      <FstFold>
        <HomeComponent/>
       </FstFold>
-      <SndFold>
-
+        <SndFold 
+          ref={secondFoldRef}
+          // secFoldAssest={secFoldContent[Math.floor(Math.random() * 6)]}
+          name={'SndFold'}>
+        <div>
+        <span>WHAT WE DO</span>
+        </div>
       </SndFold>
 
-      <ThdFold ref={secondFoldRef}>
-        <p>WHO WE ARE...</p>
+      <ThdFold>
+        <p></p>
         <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
         <CardContainer>
           <Card>
