@@ -58,19 +58,64 @@ position: relative;
   clip-path: inset(0 0 0 0);
 
   & > span {
+
+    @keyframes bg {
+    0% {
+        background-size:    0 3px,
+                            3px 0,
+                            0 3px,
+                            3px 0;
+    }
+    25% {
+        background-size:    100% 3px,
+                            3px 0,
+                            0 3px,
+                            3px 0;
+    }
+    50% {
+        background-size:    100% 3px,
+                            3px 100%,
+                            0 3px,
+                            3px 0;
+    }
+    75% {
+        background-size:    100% 3px,
+                            3px 100%,
+                            100% 3px,
+                            3px 0;
+    }
+    100% {
+        background-size:    100% 3px,
+                            3px 100%,
+                            100% 3px,
+                            3px 100%;
+    }
+}
+
+
+
+
+
   font-size: 80px;
   text-align: center;
   color: #ffffff;
   line-height: 1;
-  ::after {
-    content: '';
-    background: #FFFFFF;
-    display: block;
-    width: 570px;
-    height:6px;
-    left: 110px;
-    position: relative;
-  }
+  display: block;
+  padding: 30px;
+  background-repeat: no-repeat;
+    background-image:   linear-gradient(to right, #FFFFFF 100%, #FFFFFF 100%),
+                        linear-gradient(to bottom, #FFFFFF 100%, #FFFFFF 100%),
+                        linear-gradient(to right, #FFFFFF 100%, #FFFFFF 100%),
+                        linear-gradient(to bottom, #FFFFFF 100%, #FFFFFF 100%);
+    background-size:    100% 3px,
+                        3px 100%,
+                        100% 3px,
+                        3px 100%;
+    background-position:    0 0,
+                            100% 0,
+                            100% 100%,
+                            0 100%;
+    animation: bg 1.25s cubic-bezier(0.19, 1, 0.22, 1);
 }
 }
 `
