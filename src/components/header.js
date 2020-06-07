@@ -12,7 +12,7 @@ padding: 3% 8%;
 display: flex;
 justify-content: space-between;
 align-items: center;
-opacity: ${({showHeader})=> showHeader ? 1 : 0 };
+opacity: ${({ showHeader }) => showHeader ? 1 : 0};
 transition: all .5s ease-out;
 z-index: 2;
 `
@@ -47,14 +47,14 @@ const Header = ({ showHeader, siteTitle }) => (
       </span>
     </Logo>
     <MenuItems>
-    <span>
-      who we are
+      <span>
+        what do we do
     </span>
-    <span>
-      what do we do
+      <span>
+        who we are
     </span>
-    <span>
-      contribute
+      <span>
+        contribute
     </span>
     </MenuItems>
   </StyledHeader>

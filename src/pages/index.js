@@ -1,198 +1,71 @@
 import React, {useState, useEffect , useRef} from "react"
+import { Router, Link, Location, navigate } from "@reach/router"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 import styled, { css } from "styled-components"
-import { Transition, CSSTransition } from 'react-transition-group';
-import { animateScroll, scroller  } from 'react-scroll';
 import Layout from "../components/layout"
 
 // import Image from "../components/image"
 import SEO from "../components/seo"
+import HomePage from "./HomePage";
+import WhatWeDo from "./WhatWeDo";
+import ArticlePage from "./ArticlePage"
 
-const HomePage = styled.div`
+const HomePageWrapper = styled.div`
 height: 100vh;
 overflow-x: scroll;
-background-image: url('https://i.imgur.com/JuotK0A.jpg');
-background-size: cover;
-background-position: center;
+background-image: transparent;
 transition: all 100ms ease-out; 
-
-`
-const FstFold = styled.section`
-height: 100%;
-div {
-  transition: all .5s ease-in-out;
-  h1 {
-  color: #FFFFFF;
-  font-size: 144px;
-  padding: 22% 5% 0;
-  margin-bottom: 5px;
-  }
-  span {
-    padding: 0 5%;
-    display: block;
-    width: 60%;
-  }
-}
-
-button {
-
-}
-`
-
-const SndFold = styled.section`
-height: 100%;
 background: #000000;
-position: relative;
 
-& > div {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${({secFoldAssest})=> secFoldAssest ? `url(${secFoldAssest.img})` : `transparent`};
-  background-position: center;
-  background-size: cover;
-  height: 100vh;
-  transition: all 1500ms cubic-bezier(0.09, 0.34, 0, 1.54);
-  clip-path: inset(0 0 0 0);
-
-  & > span {
-
-    @keyframes bg {
-    0% {
-        background-size:    0 3px,
-                            3px 0,
-                            0 3px,
-                            3px 0;
-    }
-    25% {
-        background-size:    100% 3px,
-                            3px 0,
-                            0 3px,
-                            3px 0;
-    }
-    50% {
-        background-size:    100% 3px,
-                            3px 100%,
-                            0 3px,
-                            3px 0;
-    }
-    75% {
-        background-size:    100% 3px,
-                            3px 100%,
-                            100% 3px,
-                            3px 0;
-    }
-    100% {
-        background-size:    100% 3px,
-                            3px 100%,
-                            100% 3px,
-                            3px 100%;
-    }
-}
-
-
-
-
-
-  font-size: 80px;
-  text-align: center;
-  color: #ffffff;
-  line-height: 1;
-  display: block;
-  padding: 30px;
-  background-repeat: no-repeat;
-    background-image:   linear-gradient(to right, #FFFFFF 100%, #FFFFFF 100%),
-                        linear-gradient(to bottom, #FFFFFF 100%, #FFFFFF 100%),
-                        linear-gradient(to right, #FFFFFF 100%, #FFFFFF 100%),
-                        linear-gradient(to bottom, #FFFFFF 100%, #FFFFFF 100%);
-    background-size:    100% 3px,
-                        3px 100%,
-                        100% 3px,
-                        3px 100%;
-    background-position:    0 0,
-                            100% 0,
-                            100% 100%,
-                            0 100%;
-    animation: bg 1.25s cubic-bezier(0.19, 1, 0.22, 1);
-}
-}
 `
 
 
-const ThdFold = styled.section`
-height: 100%;
-p{
-  text-align: center;
-  margin: 4% 0 4%;
-  display: inline-block;
-  width: 100%;
-  font-size: 62px;
-}
-span {
-  font-size: 16px;
-  display: block;
-  padding: 0 5%;
-  text-align: center;
-}
-`
-const CardContainer= styled.div`
-  width: 80%;
-  height: 50%;
-  padding: 4%;
-  max-height: 80%;
-  margin: 4% auto;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-`
+// const ThdFold = styled.section`
+// height: 100%;
+// p{
+//   text-align: center;
+//   margin: 4% 0 4%;
+//   display: inline-block;
+//   width: 100%;
+//   font-size: 62px;
+// }
+// span {
+//   font-size: 16px;
+//   display: block;
+//   padding: 0 5%;
+//   text-align: center;
+// }
+// `
+// const CardContainer= styled.div`
+//   width: 80%;
+//   height: 50%;
+//   padding: 4%;
+//   max-height: 80%;
+//   margin: 4% auto;
+//   display: flex;
+//   justify-content: space-around;
+//   flex-wrap: wrap;
+// `
 
-const Card = styled.div`
-  display: block;
-  width: 20%;
-  background: blue;
-  p {
+// const Card = styled.div`
+//   display: block;
+//   width: 20%;
+//   background: blue;
+//   p {
 
-  }
-`
+//   }
+// `
 
 
 
 const IndexPage = () => {
   const [mainTextIn,setMainTextIn] = useState(true);
+  const [pageLocation,setPageLocation] = useState({});
 
   const secondFoldRef = useRef();
 
   useEffect(()=>{
-  },[])
-
-  const secFoldContent = [
-    {
-      img: "https://i.imgur.com/H9utx9q.jpg",
-      content: "Sunt elit nulla nisi minim adipisicing veniam laborum consequat enim minim aute duis"
-    },
-    {
-      img: "https://i.imgur.com/GTWw2Xa.jpg",
-      content: "In in cupidatat deserunt culpa ut magna non incididunt culpa qui magna nostrud enim Lorem."
-    },
-    {
-      img: "https://i.imgur.com/yJxdM22.jpg",
-      content: "Eu voluptate nostrud nostrud consequat labore irure fugiat dolore dolore veniam tempor."
-    },
-    {
-      img: "https://i.imgur.com/uPHqKwv.jpg",
-      content: "Proident duis qui culpa voluptate quis laborum ea est nulla velit commodo id duis."
-    },
-    {
-      img: "https://i.imgur.com/PHAQnG2.jpg",
-      content: "Mollit eiusmod incididunt cillum amet minim non consectetur sit."
-    },
-    {
-      img: "https://i.imgur.com/a7YIqVI.jpg",
-      content: "Fugiat duis ex est nisi reprehenderit commodo laboris aliqua qui sit enim."
-    }
-  ];
+  },[]);
 
 
   const handleScroll = (e) => {
@@ -201,12 +74,13 @@ const IndexPage = () => {
     // console.log( secondFoldRef.current.getBoundingClientRect(),"getBoundingClientRect")
     console.log( scrollTopOffset,"scrollTopOffset")
     // console.log(scrollTopOffset,"scrollTopOffset")
-   if (scrollTopOffset > 150 && mainTextIn){
+   if (scrollTopOffset > 50 && mainTextIn){
     setMainTextIn(false)
+    navigate('/WhatWeDo')
    }
-   else if( scrollTopOffset === 0){
-    setMainTextIn(true)
-   }
+  //  else if( scrollTopOffset === 0){
+  //   setMainTextIn(true)
+  //  }
 
   //  if(scrollTopOffset > 700 && scrollSecFold) {
     // scrollTo();
@@ -220,50 +94,41 @@ const IndexPage = () => {
   }
   
 
-  
+  const FadeTransitionRouter = props => (
+    <Location>
+      {({ location }) => {
+         setPageLocation(location);
+        return (
+        <TransitionGroup className="transition-group">
+          <CSSTransition key={location.key} classNames="fade" timeout={500}>
+            {/* the only difference between a router animation and
+                any other animation is that you have to pass the
+                location to the router so the old screen renders
+                the "old location" */}
+            <Router location={location} className="router">
+              {props.children}
+            </Router>
+          </CSSTransition>
+        </TransitionGroup>
+      )}}
+    </Location>
+  )
 
-
-const HomeComponent = () => <Transition timeout={{
-  appear: 100,   
-  enter: 300,
-  exit: 300
-}}
-appear 
-in={mainTextIn}>
-{state => {
-  console.log(state,"statestatestatestate")
-const defaultStyle = {
-  transition: `all .5s ease`
-};
-
-  const transitionStyles = {
-    entering: { opacity: .4}, 
-    entered: { opacity: 1},
-    exiting:  { opacity: .6},
-    exited: { opacity: 0 }
-  };
-  
-  return(
-  <div style={{...defaultStyle,...transitionStyles[state]}}>
-  <h1 >Valasai.</h1>
-  <span>Lorem Ipsum is simply dummy text since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</span>
-  </div>
-)}}
-</Transition>
   return (
-  <Layout>
+  <Layout pageLocation={pageLocation}>
     <SEO title="Home" />
-    <HomePage onScroll={handleScroll}>
-      <FstFold>
-       <HomeComponent/>
-      </FstFold>
-        <SndFold 
+     <HomePageWrapper onScroll={handleScroll}>
+      <FadeTransitionRouter>
+        <WhatWeDo path="/WhatWeDo" mainTextIn={mainTextIn} />
+        <HomePage path="/" mainTextIn={mainTextIn} />
+        <ArticlePage path="posts/:postID" />
+      </FadeTransitionRouter>
+       
+        {/* <SndFold 
           ref={secondFoldRef}
           // secFoldAssest={secFoldContent[Math.floor(Math.random() * 6)]}
           name={'SndFold'}>
-        <div>
-        <span>WHAT WE DO</span>
-        </div>
+            <SndFoldComponent/>
       </SndFold>
 
       <ThdFold>
@@ -283,8 +148,8 @@ const defaultStyle = {
             
           </Card>
         </CardContainer>
-      </ThdFold>
-      </HomePage>
+      </ThdFold>  */}
+      </HomePageWrapper> 
   </Layout>
 )}
 

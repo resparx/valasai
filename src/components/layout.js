@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
@@ -10,7 +10,7 @@ const LayoutStyles = styled.div`
 `
 
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pageLocation }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -22,18 +22,19 @@ const Layout = ({ children }) => {
   `)
 
   
-  const [showHeader,setShowHeader] = useState(false)
   const handleScroll = (e) => {
     if(e.target.scrollTop > 50){
-      setShowHeader(true)
+      // setShowHeader(true)
     } else {
-      setShowHeader(false)
+      // setShowHeader(false)
     }
   }
 
+  // const showHeader = ;
+
   return (
     <LayoutStyles>
-      <Header showHeader={showHeader} siteTitle={data.site.siteMetadata.title} />
+      <Header showHeader={pageLocation.pathname !== '/'} siteTitle={data.site.siteMetadata.title} />
         <main onScroll={handleScroll}>{children}</main>
         <footer>
         </footer>
@@ -42,6 +43,7 @@ const Layout = ({ children }) => {
 }
 
 Layout.propTypes = {
+  showHeader: PropTypes.bool,
   children: PropTypes.node.isRequired,
 }
 
