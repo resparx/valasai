@@ -10,7 +10,7 @@ const LayoutStyles = styled.div`
 `
 
 
-const Layout = ({ children, pageLocation }) => {
+const Layout = ({ children, pageLocation = {} }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
